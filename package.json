@@ -1,0 +1,35 @@
+{
+  "name": "lti-plugin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@heroicons/react": "^2.0.13",
+    "@types/chrome": "^0.0.198",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "autoprefixer": "^10.4.13",
+    "fp-ts": "^2.13.1",
+    "io-ts": "^2.2.19",
+    "jwt-decode": "^3.1.2",
+    "postcss": "^8.4.18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-json-view": "^1.21.3",
+    "tailwindcss": "^3.2.2",
+    "ts-adt": "^2.1.2",
+    "ts-pattern": "^4.0.5",
+    "typescript": "^4.8.4"
+  },
+  "scripts": {
+    "build": "yarn build_page && yarn build_panel && yarn build_css && yarn build_static",
+    "build_page": "esbuild ./src/devtool_panel/devtools-page-script.ts --bundle --outfile=./dist/devtools-page-script.js",
+    "build_panel": "esbuild ./src/devtool_panel/devtool-panel.tsx --bundle --outfile=./dist/devtool-panel.js",
+    "build_static": "cp src/**/*.html dist/ && cp ./manifest.json dist/ && cp -r ./src/icons ./dist/icons",
+    "build_css": "npx tailwindcss -i ./src/devtool_panel/devtool-panel.css -o ./dist/devtool-panel.css",
+    "start": "esbuild --bundle ./src/devtool_panel/devtool-panel.tsx --outfile=./dist/devtool-panel.js --servedir=dist"
+  },
+  "devDependencies": {
+    "esbuild": "^0.15.13"
+  }
+}

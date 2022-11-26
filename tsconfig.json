@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "es2020",
+    "sourceRoot": "./src",
+    "outDir": "dist",
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "jsx": "react",
+    "declaration": false,
+    "strict": true,
+    "inlineSources": true,
+    "inlineSourceMap": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  },
+  "include": ["./src/"],
+}
