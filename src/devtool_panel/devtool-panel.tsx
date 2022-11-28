@@ -2,15 +2,9 @@ import { flow, pipe } from 'fp-ts/function'
 import * as O from 'fp-ts/Option'
 import * as RA from 'fp-ts/ReadonlyArray'
 import * as At from './lib/atom'
-import { LtiRequest, parseLti1p1Request } from './model/LtiRequest'
 import * as ReactDOM from 'react-dom'
 import * as React from 'react'
-import {
-  addRequest,
-  addRequests,
-  ltiRequestsAtom,
-  selectLtiLaunches,
-} from './state/ltiRequests'
+import { addRequest, addRequests, ltiRequestsAtom } from './state/ltiRequests'
 import { harfile } from './test-har'
 import { LtiLaunchTable } from './ui/LtiLaunchTable'
 
@@ -30,15 +24,15 @@ const parseArray =
     ) as any
 
 function init() {
-  console.log('adding requests:', harfile.entries)
-  pipe(ltiRequestsAtom, addRequests(harfile.entries))()
+  // console.log('adding requests:', harfile.entries)
+  // pipe(ltiRequestsAtom, addRequests(harfile.entries))()
 
-  // chrome.devtools.network.getHAR((harLog) => {
-  //   pipe(ltiRequestsAtom, addRequests(harLog.entries))()
-  // })
-  // chrome.devtools.network.onRequestFinished.addListener((request) => {
-  //   pipe(ltiRequestsAtom, addRequest(request))()
-  // })
+  chrome.devtools.network.getHAR((harLog) => {
+    pipe(ltiRequestsAtom, addRequests(harLog.entries))()
+  })
+  chrome.devtools.network.onRequestFinished.addListener((request) => {
+    pipe(ltiRequestsAtom, addRequest(request))()
+  })
 }
 
 init()

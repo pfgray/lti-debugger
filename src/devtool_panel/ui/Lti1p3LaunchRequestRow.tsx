@@ -17,7 +17,7 @@ export const Lti1p3LaunchRequestRow = (props: {
     color="green"
     label="Launch"
     url={props.request.request.request.url}
-    time={new Date(props.request.request.time)}
+    time={new Date(props.request.request.startedDateTime)}
     selected={props.selected}
   />
 )

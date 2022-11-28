@@ -26,7 +26,7 @@ import {
 
 type LtiLaunchTableProps = {}
 
-const selectedRequestIndexAtom = At.mkSettableAtom<O.Option<number>>(O.some(2))
+const selectedRequestIndexAtom = At.mkSettableAtom<O.Option<number>>(O.none)
 
 const checkIsSelected = (
   idx: number,

@@ -1,6 +1,6 @@
 chrome.devtools.panels.create(
-  'LTI Launches',
-  '/icons/star.png',
+  'LTI Debugger',
+  '/icons/lti-debugger-icon16.png',
   '/devtool-panel.html',
   function (panel) {
     panel.onShown.addListener(handleShown)

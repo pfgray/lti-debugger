@@ -1,10 +1,13 @@
 {
   "manifest_version": 2,
-  "name": "lti-viewer",
-  "description": "View LTI launches",
+  "name": "LTI Debugger",
+  "description": "View & Debug LTI launches",
   "version": "0.0.1",
   "icons": {
-    "64": "icons/icon.png"
+    "16": "icons/lti-debugger-icon16.png",
+    "32": "icons/lti-debugger-icon32.png",
+    "48": "icons/lti-debugger-icon48.png",
+    "128": "icons/lti-debugger-icon128.png"
   },
   "devtools_page": "devtools-page.html"
 }

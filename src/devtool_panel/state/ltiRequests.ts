@@ -26,7 +26,8 @@ export const addRequests =
         return pipe(
           parsePostLti1p3LaunchRequest(r),
           O.altW(() => parsePostLti1p3LoginRequest(r)),
-          O.altW(() => parsePostLti1p3RedirectRequest(r))
+          O.altW(() => parsePostLti1p3RedirectRequest(r)),
+          O.altW(() => parseLti1p1Request(r))
         )
       }),
       (reqs) =>
