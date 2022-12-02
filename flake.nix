@@ -14,6 +14,8 @@
       devShell = pkgs.mkShell {
         packages = [
           pkgs.nodePackages.web-ext
+          pkgs.nodePackages.yarn
+          pkgs.envsubst
         ];
         shellHook = ''
           # ln -s ${lti-plugin.build}/libexec/lti-plugin/node_modules node_modules

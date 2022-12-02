@@ -2,3 +2,4 @@ node_modules
 .direnv
 dist
 web-ext-artifacts
+pkg

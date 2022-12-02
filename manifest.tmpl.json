@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": $MANIFEST_VERSION,
   "name": "LTI Debugger",
   "description": "View & Debug LTI launches",
   "version": "0.0.1",

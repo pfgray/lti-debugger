@@ -13,3 +13,24 @@ yarn install
 yarn build
 yarn start
 ```
+
+### Local manual installation
+
+1. Use `scripts/build.sh` to build the archive for your browser:
+
+```
+./scripts/build.sh "firefox" # for firefox
+./scripts/build.sh "chrome" # for chrome
+```
+
+2. Install the plugin:
+
+For chrome:
+A. Navigate to chrome://extensions/ in chrome
+B. Enable "Developer Mode"
+C. Click "Load Unpacked" and navigate to `lti-debugger/dist`
+
+For Firefox
+A. Navigate to about:debugging in firefox
+B. Click "This Firefox" -> "Load Temporary Add-on"
+C. Choose lti-debugger/pkg/firefox/lti-debugger-{version}.zip
