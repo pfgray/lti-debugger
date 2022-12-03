@@ -2,7 +2,11 @@
 
 This plugin adds a "Lti Debugger" pane in the developer tools which listens for LTI requests, and displays them as they resolve. It also parses JWT parameters, and displays them as navigable JSON.
 
-[![Get the Firefox add on](https://blog.mozilla.org/addons/files/2015/11/get-the-addon-small.png)](https://addons.mozilla.org/en-US/firefox/addon/lti-debugger/)
+<a href="https://addons.mozilla.org/en-US/firefox/addon/lti-debugger/"><img src="https://blog.mozilla.org/addons/files/2015/11/get-the-addon-small.png" height="36"></a>
+
+<a href="https://chrome.google.com/webstore/detail/lti-debugger/cpjdeioljkbgkldnbojoagdoiggnlhll"><img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/tbyBjqi7Zu733AAKA5n4.png" height="36">
+
+Screenshot:
 
 ![screenshot of the LTI Debugger extension](./lti-debugger.png)
 
