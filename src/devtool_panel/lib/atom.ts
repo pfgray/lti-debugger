@@ -10,18 +10,15 @@ export type Atom<T> = {
 export const ap =
   <A, B>(fab: Atom<(a: A) => B>) =>
   (fa: Atom<A>): Atom<B> => {
-    console.log('got setting up ap', fa.currentValue)
     const atom: Atom<B> = {
       currentValue: fab.currentValue(fa.currentValue),
       observe: (g) => {
         const killFab = fab.observe((next, prev) => {
-          console.log('got next value: ', next)
           const prevValue = atom.currentValue
           atom.currentValue = next(fa.currentValue)
           g(atom.currentValue, prevValue)
         })
         const killFa = fa.observe((next, prev) => {
-          console.log('got next value: ', next)
           const prevValue = atom.currentValue
           atom.currentValue = fab.currentValue(next)
           g(atom.currentValue, prevValue)

@@ -31,9 +31,7 @@ export const ViewWithDetails = (props: ResizableProps) => {
       lastMousePositionRef.current = void 0
     }
     function onMouseMove(event: MouseEvent) {
-      console.log('Mouse moving, dragging?', draggingRef.current)
       if (overlayRef.current && lastMousePositionRef.current) {
-        console.log('mouse moving, we are dragging')
         // overlayRef.current.clientWidth = void 0
 
         // Get x-coordinate of pointer relative to container
@@ -65,7 +63,7 @@ export const ViewWithDetails = (props: ResizableProps) => {
   }, [])
 
   const mainBox = (
-    <div className="flex flex-col flex-1 pr-1" ref={leftBoxRef}>
+    <div className="flex flex-col flex-1 pr-1 w-full" ref={leftBoxRef}>
       {props.main()}
     </div>
   )

@@ -5,8 +5,10 @@ import * as At from './lib/atom'
 import * as ReactDOM from 'react-dom'
 import * as React from 'react'
 import { addRequest, addRequests, ltiRequestsAtom } from './state/ltiRequests'
-import { harfile } from './test-har'
 import { LtiLaunchTable } from './ui/LtiLaunchTable'
+import { harfile } from './test-har'
+
+declare const RELEASE: boolean
 
 type ParsedOption<T extends O.Option<any>> = T extends O.Some<infer U>
   ? U
@@ -24,15 +26,20 @@ const parseArray =
     ) as any
 
 function init() {
-  // console.log('adding requests:', harfile.entries)
-  // pipe(ltiRequestsAtom, addRequests(harfile.entries))()
-
-  chrome.devtools.network.getHAR((harLog) => {
-    pipe(ltiRequestsAtom, addRequests(harLog.entries))()
-  })
-  chrome.devtools.network.onRequestFinished.addListener((request) => {
-    pipe(ltiRequestsAtom, addRequest(request))()
-  })
+  if (RELEASE === true) {
+    chrome.devtools.network.getHAR((harLog) => {
+      pipe(ltiRequestsAtom, addRequests(harLog.entries))()
+    })
+    chrome.devtools.network.onRequestFinished.addListener((request) => {
+      pipe(ltiRequestsAtom, addRequest(request))()
+    })
+  } else {
+    setTimeout(() => {
+      import('./test-har').then((harFile) => {
+        pipe(ltiRequestsAtom, addRequests(harfile.entries))()
+      })
+    }, 1)
+  }
 }
 
 init()

@@ -40,13 +40,8 @@ const parsePart =
   <R extends Record<'parts', string[]>>(obj: R) =>
     pipe(
       O.fromNullable(obj.parts[index]),
-      tapOp((part) => {
-        console.log('decoding part: ', part)
-      }),
       O.chain(decode),
-      tapOpM('jwt parser: parsing'),
       O.chain(parse),
-      tapOpM('jwt parser: isObject'),
       O.filter(isObject)
     )
 

@@ -3,8 +3,6 @@ import * as React from 'react'
 import { RequestRow } from './RequestRow'
 import * as O from 'fp-ts/Option'
 import * as RA from 'fp-ts/ReadonlyArray'
-
-import ReactJson from 'react-json-view'
 import { pipe } from 'fp-ts/lib/function'
 import { RequestDetails } from './request/RequestDetails'
 import { json, Parameters } from './request/Parameters'
@@ -17,6 +15,7 @@ export const Lti1p3RedirectRequestRow = (props: {
   <RequestRow
     color="purple"
     label="Redirect"
+    method={props.request.request.request.method}
     url={props.request.request.request.url}
     time={new Date(props.request.request.startedDateTime)}
     selected={props.selected}

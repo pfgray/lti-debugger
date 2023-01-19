@@ -24,13 +24,5 @@
       packages = {
         lti-plugin-build = lti-plugin.lti-plugin-build;
       };
-      apps.repl = flake-utils.lib.mkApp {
-        drv = pkgs.writeShellScriptBin "repl" ''
-          confnix=$(mktemp)
-          echo "builtins.getFlake (toString $(git rev-parse --show-toplevel))" >$confnix
-          trap "rm $confnix" EXIT
-          nix repl $confnix
-        '';
-      };
     });
 }

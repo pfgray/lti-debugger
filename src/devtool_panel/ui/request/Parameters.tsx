@@ -28,7 +28,7 @@ export const Parameters = (props: ParametersProps) => (
       RA.map(
         match({
           json: (j) => (
-            <div className="flex flex-col text-xs">
+            <div className="flex flex-col text-xs" key={j.name}>
               <div className="font-bold">{j.name}:</div>
               <ReactJson
                 src={j.value}
@@ -45,7 +45,7 @@ export const Parameters = (props: ParametersProps) => (
             </div>
           ),
           str: (s) => (
-            <div className="text-xs">
+            <div className="text-xs" key={s.name}>
               <span className="font-bold mr-1">{s.name}:</span>
               <span>{s.value}</span>
             </div>

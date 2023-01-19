@@ -1,6 +1,5 @@
-import { Lti1p1LaunchRequest, LtiRequest, Of } from '../model/LtiRequest'
+import { Lti1p1LaunchRequest } from '../model/LtiRequest'
 import * as React from 'react'
-import ReactJson from 'react-json-view'
 import { RequestRow } from './RequestRow'
 import { RequestDetails } from './request/RequestDetails'
 import { json, Parameters } from './request/Parameters'
@@ -14,6 +13,7 @@ export const Lti1p1LaunchRequestRow = (props: {
   <RequestRow
     color="blue"
     label="Launch"
+    method={props.request.request.request.method}
     url={props.request.request.request.url}
     time={new Date(props.request.request.startedDateTime)}
     selected={props.selected}

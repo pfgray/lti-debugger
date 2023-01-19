@@ -10,7 +10,7 @@ import {
   BrowserRequest,
 } from '../model/LtiRequest'
 import { parsePostLti1p3LaunchRequest } from '../model/parse1p3LaunchRequest'
-import { parsePostLti1p3LoginRequest } from '../model/parse1p3LoginRequest'
+import { parseLti1p3LoginRequest } from '../model/parse1p3LoginRequest'
 import { parsePostLti1p3RedirectRequest } from '../model/parse1p3RedirectRequest'
 
 export const ltiRequestsAtom = At.mkSettableAtom<
@@ -25,7 +25,7 @@ export const addRequests =
       RA.filterMap<BrowserRequest, LtiRequest>((r) => {
         return pipe(
           parsePostLti1p3LaunchRequest(r),
-          O.altW(() => parsePostLti1p3LoginRequest(r)),
+          O.altW(() => parseLti1p3LoginRequest(r)),
           O.altW(() => parsePostLti1p3RedirectRequest(r)),
           O.altW(() => parseLti1p1Request(r))
         )
@@ -38,7 +38,6 @@ export const addRequests =
           )
         )
     )
-
 export const addRequest = (request: BrowserRequest) => addRequests([request])
 
 export const findRequestType =

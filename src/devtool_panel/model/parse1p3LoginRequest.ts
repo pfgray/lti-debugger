@@ -1,75 +1,52 @@
-import { ADT } from 'ts-adt'
-import { flow, pipe } from 'fp-ts/function'
-import * as O from 'fp-ts/Option'
 import * as A from 'fp-ts/Array'
-import * as IO from 'fp-ts/IO'
-import { get } from '../lib/get'
-import { LtiRequest, Of } from './LtiRequest'
+import { pipe } from 'fp-ts/function'
+import * as O from 'fp-ts/Option'
 import jwt_decode from 'jwt-decode'
+import { BrowserParam, BrowserRequest, LtiRequest, Of } from './LtiRequest'
 import { parseJwt } from './parseJwt'
-
-type Request = chrome.devtools.network.HARLog['entries'][number]
-
-type NotUndefined<T> = T extends undefined ? never : T
-
-type Params = NotUndefined<
-  NotUndefined<Required<Request>['request']['postData']>['params']
->
+import { mkGetOrPostRequestParser } from './parseRequestHelpers'
 
 const isObject = (x: unknown): x is object =>
   typeof x === 'object' && x !== null
 
 const findPostParam =
   (name: string) =>
-  <R extends Record<'params', Params>>(req: R): O.Option<string> =>
+  <R extends Record<'params', BrowserParam[]>>(req: R): O.Option<string> =>
     pipe(
       req.params,
       A.findFirst((p) => p.name === name),
       O.chain((p) => O.fromNullable(p.value))
     )
 
-const add =
-  <K extends string>(key: K) =>
-  <R extends {}, Z>(f: (r: R) => Z) =>
-  (r: R): R & Record<K, Z> => {
-    return {
-      ...r,
-      [key]: f(r),
-    } as any
-  }
-
-export const tap =
-  (message: string) =>
-  <A>(a: A): A => {
-    console.log(message)
-    return a
-  }
-
-export const tapF =
-  <A>(f: (a: A) => unknown) =>
-  (a: A): A => {
-    f(a)
-    return a
-  }
-
-const tapOp =
-  <A>(f: (a: A) => unknown) =>
-  (a: O.Option<A>): O.Option<A> => {
-    if (O.isSome(a)) {
-      f(a.value)
-    }
-    return a
-  }
-
-const tapOpM =
-  <A>(message: string) =>
-  (a: O.Option<A>): O.Option<A> =>
-    tapOp<A>(() => {
-      console.log(message)
-    })(a)
+export const parseLti1p3LoginRequest = (
+  request: BrowserRequest
+): O.Option<Of<LtiRequest, 'lti1p3Login'>> =>
+  pipe(
+    request,
+    mkGetOrPostRequestParser({
+      required: ['iss', 'login_hint', 'target_link_uri'] as const,
+      optional: ['lti_message_hint', 'lti_deployment_id', 'client_id'] as const,
+    }),
+    (p) => p,
+    O.map(
+      ({
+        required: { iss, login_hint, target_link_uri },
+        optional: { lti_message_hint, lti_deployment_id, client_id },
+      }) => ({
+        _type: 'lti1p3Login',
+        request,
+        iss,
+        login_hint,
+        target_link_uri,
+        lti_message_hint: pipe(lti_message_hint, O.chain(parseJwt)),
+        lti_deployment_id,
+        client_id,
+      })
+    )
+  )
 
 export function parsePostLti1p3LoginRequest(
-  request: Request
+  request: BrowserRequest
 ): O.Option<Of<LtiRequest, 'lti1p3Login'>> {
   return pipe(
     O.some(request),
@@ -95,7 +72,6 @@ export function parsePostLti1p3LoginRequest(
         lti_deployment_id,
         client_id,
       }) => {
-        console.log('found login: ', request.pageref)
         return {
           _type: 'lti1p3Login',
           request: request,

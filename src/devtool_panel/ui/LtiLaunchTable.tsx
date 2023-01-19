@@ -40,10 +40,6 @@ const checkIsSelected = (
     )
   )
 
-ltiRequestsAtom.observe((reqs) => {
-  console.log('got reqs: ', reqs)
-})
-
 const launchesWithSelectedStatusAtom = pipe(
   ltiRequestsAtom,
   At.ap2(selectedRequestIndexAtom),
@@ -60,13 +56,8 @@ const launchesWithSelectedStatusAtom = pipe(
   )
 )
 
-launchesWithSelectedStatusAtom.observe((reqs) => {
-  console.log('got launches with status', reqs)
-})
-
 export const LtiLaunchTable = (props: LtiLaunchTableProps) => {
   const requestsWithSelected = useAtom(launchesWithSelectedStatusAtom)
-
   return (
     <ViewWithDetails
       main={() =>

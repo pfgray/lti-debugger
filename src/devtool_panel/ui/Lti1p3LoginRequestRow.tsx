@@ -1,18 +1,12 @@
-import {
-  BrowserParam,
-  BrowserRequest,
-  Lti1p3LoginRequest,
-} from '../model/LtiRequest'
-import * as React from 'react'
-import { RequestRow } from './RequestRow'
-import ReactJson from 'react-json-view'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/Option'
 import * as RA from 'fp-ts/ReadonlyArray'
+import * as React from 'react'
+import { Lti1p3LoginRequest } from '../model/LtiRequest'
+import { json, Parameters } from './request/Parameters'
 import { RequestDetails } from './request/RequestDetails'
-import { eqString } from 'fp-ts/lib/Eq'
-import { json, Parameters, ParamFormat, str } from './request/Parameters'
 import { postDataWithout } from './request/requestHelpers'
+import { RequestRow } from './RequestRow'
 
 export const Lti1p3LoginRequestRow = (props: {
   request: Lti1p3LoginRequest
@@ -21,6 +15,7 @@ export const Lti1p3LoginRequestRow = (props: {
   <RequestRow
     color="yellow"
     label="Login"
+    method={props.request.request.request.method}
     url={props.request.request.request.url}
     time={new Date(props.request.request.startedDateTime)}
     selected={props.selected}

@@ -12,7 +12,7 @@ export const RequestDetails = (props: RequestDetailsProps) => (
     <Collapsible title="Request Headers" initiallyOpen={false}>
       <div className="p-1">
         {props.request.request.headers.map((h) => (
-          <div className="text-xs">
+          <div className="text-xs" key={h.name}>
             <span className="font-bold mr-1">{h.name}:</span>
             <span>{h.value}</span>
           </div>
@@ -22,7 +22,7 @@ export const RequestDetails = (props: RequestDetailsProps) => (
     <Collapsible title="Response Headers" initiallyOpen={false}>
       <div className="p-1">
         {props.request.response.headers.map((h) => (
-          <div className="text-xs">
+          <div className="text-xs" key={h.name}>
             <span className="font-bold mr-1">{h.name}:</span>
             <span>{h.value}</span>
           </div>
