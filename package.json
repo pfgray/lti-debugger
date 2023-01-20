@@ -1,6 +1,6 @@
 {
-  "name": "lti-plugin",
-  "version": "1.0.0",
+  "name": "lti-debugger",
+  "version": "0.0.2",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {

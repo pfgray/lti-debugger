@@ -2,7 +2,7 @@
   "manifest_version": $MANIFEST_VERSION,
   "name": "LTI Debugger",
   "description": "View & Debug LTI launches",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icons": {
     "16": "icons/lti-debugger-icon16.png",
     "32": "icons/lti-debugger-icon32.png",
