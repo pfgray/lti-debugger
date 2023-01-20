@@ -4,11 +4,7 @@ import * as RR from 'fp-ts/ReadonlyRecord'
 import * as RA from 'fp-ts/ReadonlyArray'
 import * as React from 'react'
 import ReactJson from 'react-json-view'
-
-export type ParamFormat = ADT<{
-  json: { name: string; value: object }
-  str: { name: string; value: string }
-}>
+import { ParamFormat } from './requestHelpers'
 
 export const json =
   (name: string) =>

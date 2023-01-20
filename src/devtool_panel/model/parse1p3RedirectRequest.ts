@@ -4,7 +4,7 @@ import { BrowserRequest, Lti1p3RedirectRequest } from './LtiRequest'
 import { parseJwt } from './parseJwt'
 import { mkGetOrPostRequestParser } from './parseRequestHelpers'
 
-export const parsePostLti1p3RedirectRequest = (
+export const parseLti1p3RedirectRequest = (
   request: BrowserRequest
 ): O.Option<Lti1p3RedirectRequest> =>
   pipe(

@@ -27,7 +27,7 @@
     "build_panel": "esbuild ./src/devtool_panel/devtool-panel.tsx --bundle --outfile=./dist/devtool-panel.js --define:RELEASE=true",
     "build_static": "cp src/**/*.html dist/ && cp -r ./src/icons ./dist/icons",
     "build_css": "tailwindcss -i ./src/devtool_panel/devtool-panel.css -o ./dist/devtool-panel.css",
-    "start": "esbuild --bundle ./src/devtool_panel/devtool-panel.tsx --outfile=./dist/devtool-panel.js --servedir=dist --define:RELEASE=false"
+    "start": "esbuild --sourcemap --bundle ./src/devtool_panel/devtool-panel.tsx --outfile=./dist/devtool-panel.js --servedir=dist --define:RELEASE=false"
   },
   "devDependencies": {
     "esbuild": "^0.15.13"

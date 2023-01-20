@@ -11,7 +11,7 @@ import {
 } from '../model/LtiRequest'
 import { parsePostLti1p3LaunchRequest } from '../model/parse1p3LaunchRequest'
 import { parseLti1p3LoginRequest } from '../model/parse1p3LoginRequest'
-import { parsePostLti1p3RedirectRequest } from '../model/parse1p3RedirectRequest'
+import { parseLti1p3RedirectRequest } from '../model/parse1p3RedirectRequest'
 
 export const ltiRequestsAtom = At.mkSettableAtom<
   O.Option<ReadonlyArray<LtiRequest>>
@@ -26,7 +26,7 @@ export const addRequests =
         return pipe(
           parsePostLti1p3LaunchRequest(r),
           O.altW(() => parseLti1p3LoginRequest(r)),
-          O.altW(() => parsePostLti1p3RedirectRequest(r)),
+          O.altW(() => parseLti1p3RedirectRequest(r)),
           O.altW(() => parseLti1p1Request(r))
         )
       }),

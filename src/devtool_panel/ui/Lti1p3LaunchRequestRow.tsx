@@ -7,7 +7,7 @@ import { json, Parameters } from './request/Parameters'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/Option'
 import * as RA from 'fp-ts/ReadonlyArray'
-import { postDataWithout } from './request/requestHelpers'
+import { getParamsWithout } from './request/requestHelpers'
 
 export const Lti1p3LaunchRequestRow = (props: {
   request: Lti1p3LaunchRequest
@@ -29,8 +29,8 @@ export const Lti1p3LaunchDetails = (props: {
   <RequestDetails request={props.request.request}>
     <Parameters
       parameters={pipe(
-        props.request.request.request.postData,
-        postDataWithout('id_token'),
+        props.request.request.request,
+        getParamsWithout('id_token'),
         RA.concat([pipe(props.request.id_token.payload, json('id_token'))])
       )}
     />

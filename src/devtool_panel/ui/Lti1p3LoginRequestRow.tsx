@@ -5,7 +5,7 @@ import * as React from 'react'
 import { Lti1p3LoginRequest } from '../model/LtiRequest'
 import { json, Parameters } from './request/Parameters'
 import { RequestDetails } from './request/RequestDetails'
-import { postDataWithout } from './request/requestHelpers'
+import { getParamsWithout } from './request/requestHelpers'
 import { RequestRow } from './RequestRow'
 
 export const Lti1p3LoginRequestRow = (props: {
@@ -26,8 +26,8 @@ export const Lti1p3LoginDetails = (props: { request: Lti1p3LoginRequest }) => (
   <RequestDetails request={props.request.request}>
     <Parameters
       parameters={pipe(
-        props.request.request.request.postData,
-        postDataWithout('lti_message_hint'),
+        props.request.request.request,
+        getParamsWithout('lti_message_hint'),
         RA.concat(
           pipe(
             props.request.lti_message_hint,

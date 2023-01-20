@@ -6,7 +6,7 @@ import * as RA from 'fp-ts/ReadonlyArray'
 import { pipe } from 'fp-ts/lib/function'
 import { RequestDetails } from './request/RequestDetails'
 import { json, Parameters } from './request/Parameters'
-import { postDataWithout } from './request/requestHelpers'
+import { getParamsWithout } from './request/requestHelpers'
 
 export const Lti1p3RedirectRequestRow = (props: {
   request: Lti1p3RedirectRequest
@@ -28,8 +28,8 @@ export const Lti1p3RedirectDetails = (props: {
   <RequestDetails request={props.request.request}>
     <Parameters
       parameters={pipe(
-        props.request.request.request.postData,
-        postDataWithout('lti_message_hint'),
+        props.request.request.request,
+        getParamsWithout('lti_message_hint'),
         RA.concat(
           pipe(
             props.request.lti_message_hint,

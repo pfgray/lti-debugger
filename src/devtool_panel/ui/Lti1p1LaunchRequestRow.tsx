@@ -4,7 +4,7 @@ import { RequestRow } from './RequestRow'
 import { RequestDetails } from './request/RequestDetails'
 import { json, Parameters } from './request/Parameters'
 import { pipe } from 'fp-ts/lib/function'
-import { postDataWithout } from './request/requestHelpers'
+import { getParamsWithout } from './request/requestHelpers'
 
 export const Lti1p1LaunchRequestRow = (props: {
   request: Lti1p1LaunchRequest
@@ -25,10 +25,7 @@ export const Lti1p1LaunchDetails = (props: {
 }) => (
   <RequestDetails request={props.request.request}>
     <Parameters
-      parameters={pipe(
-        props.request.request.request.postData,
-        postDataWithout()
-      )}
+      parameters={pipe(props.request.request.request, getParamsWithout())}
     />
   </RequestDetails>
 )
