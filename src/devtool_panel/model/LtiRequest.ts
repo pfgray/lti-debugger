@@ -13,6 +13,10 @@ export type LtiRequest = ADT<{
   lti1p1: {
     request: BrowserRequest
   }
+  lti1p3DeepLinkingResponse: {
+    request: BrowserRequest
+    jwt: Jwt
+  }
   lti1p3Login: {
     request: BrowserRequest
     iss: string
@@ -46,6 +50,10 @@ export type Lti1p1LaunchRequest = Of<LtiRequest, 'lti1p1'>
 export type Lti1p3LoginRequest = Of<LtiRequest, 'lti1p3Login'>
 export type Lti1p3RedirectRequest = Of<LtiRequest, 'lti1p3Redirect'>
 export type Lti1p3LaunchRequest = Of<LtiRequest, 'lti1p3Launch'>
+export type Lti1p3DeepLinkingResponse = Of<
+  LtiRequest,
+  'lti1p3DeepLinkingResponse'
+>
 
 type NotUndefined<T> = T extends undefined ? never : T
 export type BrowserRequest = chrome.devtools.network.HARLog['entries'][number]

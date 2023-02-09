@@ -6,7 +6,7 @@ type RequestRowProps = {
   url: string
   label: string
   time: Date
-  color: 'yellow' | 'green' | 'purple' | 'blue'
+  color: 'yellow' | 'green' | 'purple' | 'blue' | 'cyan'
   selected: boolean
 }
 
@@ -27,6 +27,8 @@ export const RequestRow = (props: RequestRowProps) => (
             ? 'bg-blue-500'
             : props.color === 'green'
             ? 'bg-green-500'
+            : props.color === 'cyan'
+            ? 'bg-cyan-500'
             : 'bg-purple-500')
         }
       >

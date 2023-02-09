@@ -12,6 +12,7 @@ import {
 import { parsePostLti1p3LaunchRequest } from '../model/parse1p3LaunchRequest'
 import { parseLti1p3LoginRequest } from '../model/parse1p3LoginRequest'
 import { parseLti1p3RedirectRequest } from '../model/parse1p3RedirectRequest'
+import { parsePostLti1p3DeepLinkingResponse } from '../model/parse1p3DeepLinkingResponse'
 
 export const ltiRequestsAtom = At.mkSettableAtom<
   O.Option<ReadonlyArray<LtiRequest>>
@@ -27,7 +28,8 @@ export const addRequests =
           parsePostLti1p3LaunchRequest(r),
           O.altW(() => parseLti1p3LoginRequest(r)),
           O.altW(() => parseLti1p3RedirectRequest(r)),
-          O.altW(() => parseLti1p1Request(r))
+          O.altW(() => parseLti1p1Request(r)),
+          O.altW(() => parsePostLti1p3DeepLinkingResponse(r))
         )
       }),
       (reqs) =>

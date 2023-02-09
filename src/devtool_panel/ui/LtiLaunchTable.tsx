@@ -23,6 +23,10 @@ import {
   Lti1p3LaunchDetails,
   Lti1p3LaunchRequestRow,
 } from './Lti1p3LaunchRequestRow'
+import {
+  Lti1p3DeepLinkingResponseDetails,
+  Lti1p3DeepLinkingResponseRow,
+} from './Lti1p3DeepLinkingResponseRow'
 
 type LtiLaunchTableProps = {}
 
@@ -85,6 +89,12 @@ export const LtiLaunchTable = (props: LtiLaunchTableProps) => {
                     lti1p3Launch: (r) => (
                       <Lti1p3LaunchRequestRow request={r} selected={selected} />
                     ),
+                    lti1p3DeepLinkingResponse: (r) => (
+                      <Lti1p3DeepLinkingResponseRow
+                        request={r}
+                        selected={selected}
+                      />
+                    ),
                   })
                 )
               ),
@@ -115,6 +125,9 @@ export const LtiLaunchTable = (props: LtiLaunchTableProps) => {
             lti1p3Launch: (r) => <Lti1p3LaunchDetails request={r} />,
             lti1p3Login: (r) => <Lti1p3LoginDetails request={r} />,
             lti1p3Redirect: (r) => <Lti1p3RedirectDetails request={r} />,
+            lti1p3DeepLinkingResponse: (r) => (
+              <Lti1p3DeepLinkingResponseDetails request={r} />
+            ),
           })
         )
       )}
