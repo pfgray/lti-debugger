@@ -36,8 +36,10 @@ export const RequestRow = (props: RequestRowProps) => (
         {props.label}
       </div>
       <div className="ml-2 min-w-[4rem] text-center">{props.method}</div>
-      <div className="ml-2 min-w-[6rem] text-center">{props.message_type}</div>
-      <div className="ml-2 overflow-hidden whitespace-nowrap text-ellipsis">
+      {props.message_type ? (
+        <div className="ml-2 text-center">{props.message_type}</div>
+      ) : null}
+      <div className="flex-1 ml-2 overflow-hidden whitespace-nowrap text-ellipsis">
         {props.url}
       </div>
       <div className="ml-4 min-w-[4rem]">{timeAgo(props.time)}</div>
