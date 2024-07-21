@@ -10,10 +10,10 @@ import { tapOp, tapOpM } from '../lib/tap'
 
 export type Jwt = {
   header: object
-  payload: object
+  payload: Record<string, any>
 }
 
-const isObject = (x: unknown): x is object =>
+const isObject = (x: unknown): x is Record<string, any> =>
   typeof x === 'object' && x !== null
 
 const parse = O.tryCatchK((s: string) => {
@@ -45,7 +45,7 @@ const parsePart =
       O.filter(isObject)
     )
 
-export const parseJwt = (s: string) => {
+export const parseJwt = (s: string): O.Option<Jwt> => {
   return pipe(
     O.some(s.split('.')),
     O.bindTo('parts'),

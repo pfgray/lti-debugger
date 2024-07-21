@@ -16,6 +16,11 @@ export const Lti1p3LaunchRequestRow = (props: {
   <RequestRow
     color="green"
     label="Launch"
+    message_type={
+      props.request.id_token.payload[
+        'https://purl.imsglobal.org/spec/lti/claim/message_type'
+      ] as string
+    }
     method={props.request.request.request.method}
     url={props.request.request.request.url}
     time={new Date(props.request.request.startedDateTime)}

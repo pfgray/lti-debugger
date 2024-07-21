@@ -6,6 +6,7 @@ type RequestRowProps = {
   url: string
   label: string
   time: Date
+  message_type?: string
   color: 'yellow' | 'green' | 'purple' | 'blue' | 'cyan'
   selected: boolean
 }
@@ -35,6 +36,7 @@ export const RequestRow = (props: RequestRowProps) => (
         {props.label}
       </div>
       <div className="ml-2 min-w-[4rem] text-center">{props.method}</div>
+      <div className="ml-2 min-w-[6rem] text-center">{props.message_type}</div>
       <div className="ml-2 overflow-hidden whitespace-nowrap text-ellipsis">
         {props.url}
       </div>

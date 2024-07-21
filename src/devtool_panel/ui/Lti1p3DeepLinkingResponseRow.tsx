@@ -21,6 +21,11 @@ export const Lti1p3DeepLinkingResponseRow = (props: {
   <RequestRow
     color="cyan"
     label="DeepLink"
+    message_type={
+      props.request.jwt.payload[
+        'https://purl.imsglobal.org/spec/lti/claim/message_type'
+      ] as string
+    }
     method={props.request.request.request.method}
     url={props.request.request.request.url}
     time={new Date(props.request.request.startedDateTime)}

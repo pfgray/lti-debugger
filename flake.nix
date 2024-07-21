@@ -22,7 +22,7 @@
         '';
       };
       packages = {
-        lti-plugin-build = lti-plugin.lti-plugin-build;
+        lti-plugin-build = lti-plugin.build;
       };
     });
 }
