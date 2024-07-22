@@ -12,7 +12,10 @@ function build {
   MANIFEST_VERSION=$1
   export MANIFEST_VERSION
   echo "using manifest version: $MANIFEST_VERSION"
-  cat "$DIR/../manifest.tmpl.json" | envsubst '${MANIFEST_VERSION}' > "$DIST/manifest.json"
+  PACKAGE_VERSION=$(cat package.json | jq -r '.version')
+  export PACKAGE_VERSION
+  echo "building version: $PACKAGE_VERSION"
+  cat "$DIR/../manifest.tmpl.json" | envsubst > "$DIST/manifest.json"
   yarn build
 }
 
