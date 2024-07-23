@@ -42,6 +42,9 @@ export const addRequests =
     )
 export const addRequest = (request: BrowserRequest) => addRequests([request])
 
+export const clearRequests = (sa: typeof ltiRequestsAtom): IO.IO<void> =>
+  sa.set(() => O.some([]))
+
 export const findRequestType =
   <K extends LtiRequest['_type']>(typ: K) =>
   (

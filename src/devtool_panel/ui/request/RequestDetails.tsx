@@ -9,7 +9,9 @@ type RequestDetailsProps = {
 
 export const RequestDetails = (props: RequestDetailsProps) => (
   <div className="flex flex-col">
-    <div className="p-0.5 text-xs">URL: {props.request.request.url}</div>
+    <div className="p-0.5 text-xs break-all">
+      URL: {props.request.request.url}
+    </div>
     <Collapsible title="Request Headers" initiallyOpen={false}>
       <div className="p-1">
         {props.request.request.headers.map((h) => (

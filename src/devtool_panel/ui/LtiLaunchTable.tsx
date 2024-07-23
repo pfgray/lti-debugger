@@ -4,7 +4,7 @@ import * as RA from 'fp-ts/ReadonlyArray'
 import * as At from '../lib/atom'
 import * as O from 'fp-ts/Option'
 import { useAtom } from '../lib/useAtom'
-import { ltiRequestsAtom } from '../state/ltiRequests'
+import { clearRequests, ltiRequestsAtom } from '../state/ltiRequests'
 import { ViewWithDetails } from './ViewWithDetails'
 import { match } from 'ts-adt'
 import {
@@ -107,7 +107,19 @@ export const LtiLaunchTable = (props: LtiLaunchTableProps) => {
                   {el}
                 </div>
               )),
-              (els) => <>{els}</>
+              (els) => (
+                <>
+                  {els}
+                  <div>
+                    <button
+                      className="mt-2 mb-2 text-xs bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      onClick={clearRequests(ltiRequestsAtom)}
+                    >
+                      Clear
+                    </button>
+                  </div>
+                </>
+              )
             )
           )
         )
