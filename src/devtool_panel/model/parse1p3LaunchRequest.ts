@@ -1,23 +1,32 @@
+import * as E from 'fp-ts/Either'
 import { pipe } from 'fp-ts/function'
-import * as O from 'fp-ts/Option'
-import { LtiRequest, Of } from './LtiRequest'
-import { BrowserRequest } from './LtiRequest'
-import { findPostParam } from './parseRequestHelpers'
-import { parseJwt } from './parseJwt'
+import { BrowserRequest, LtiRequest, Of } from './LtiRequest'
+import { parseJwtE } from './parseJwt'
+import { findPostParamE } from './parseRequestHelpers'
 
 export function parsePostLti1p3LaunchRequest(
   request: BrowserRequest
-): O.Option<Of<LtiRequest, 'lti1p3Launch'>> {
+): E.Either<string, Of<LtiRequest, 'lti1p3Launch'>> {
   return pipe(
-    O.some(request),
-    O.bindTo('req'),
-    O.filter(({ req }) => req.request.method === 'POST'),
-    O.bind('postData', ({ req }) => O.fromNullable(req.request.postData)),
-    O.bind('params', ({ postData }) => O.fromNullable(postData.params)),
-    O.bind('state', findPostParam('state')),
-    O.bind('unparsed_id_token', findPostParam('id_token')),
-    O.bind('id_token', ({ unparsed_id_token }) => parseJwt(unparsed_id_token)),
-    O.map(({ id_token, state, unparsed_id_token }) => {
+    E.right(request),
+    E.bindTo('req'),
+    (a) => a,
+    E.filterOrElseW(
+      ({ req }) => req.request.method === 'POST',
+      () => 'not a POST request'
+    ),
+    E.bindW('postData', ({ req }) =>
+      E.fromNullable('No postData')(req.request.postData)
+    ),
+    E.bindW('params', ({ postData }) =>
+      E.fromNullable('No params')(postData.params)
+    ),
+    E.bindW('state', findPostParamE('state')),
+    E.bindW('unparsed_id_token', findPostParamE('id_token')),
+    E.bindW('id_token', ({ unparsed_id_token }) =>
+      parseJwtE(unparsed_id_token)
+    ),
+    E.map(({ id_token, state, unparsed_id_token }) => {
       return {
         _type: 'lti1p3Launch',
         unparsed_id_token,

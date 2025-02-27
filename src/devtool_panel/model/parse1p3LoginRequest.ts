@@ -1,12 +1,13 @@
 import { pipe } from 'fp-ts/function'
 import * as O from 'fp-ts/Option'
+import * as E from 'fp-ts/Either'
 import { BrowserRequest, LtiRequest, Of } from './LtiRequest'
 import { parseJwt } from './parseJwt'
 import { mkGetOrPostRequestParser } from './parseRequestHelpers'
 
 export const parseLti1p3LoginRequest = (
   request: BrowserRequest
-): O.Option<Of<LtiRequest, 'lti1p3Login'>> =>
+): E.Either<string, Of<LtiRequest, 'lti1p3Login'>> =>
   pipe(
     request,
     mkGetOrPostRequestParser({

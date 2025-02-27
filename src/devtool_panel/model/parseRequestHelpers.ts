@@ -1,6 +1,7 @@
 import { ADT } from 'ts-adt'
 import { flow, pipe } from 'fp-ts/function'
 import * as O from 'fp-ts/Option'
+import * as E from 'fp-ts/Either'
 import * as A from 'fp-ts/Array'
 import * as RA from 'fp-ts/ReadonlyArray'
 import * as RR from 'fp-ts/ReadonlyRecord'
@@ -11,6 +12,20 @@ export type NotUndefined<T> = T extends undefined ? never : T
 export type Params = NotUndefined<
   NotUndefined<Required<BrowserRequest>['request']['postData']>['params']
 >
+
+export const findPostParamE =
+  (name: string) =>
+  <R extends Record<'params', Params>>(req: R): E.Either<string, string> =>
+    pipe(
+      req.params,
+      A.findFirst((p) => p.name === name),
+      E.fromOption(() => `Could not find param ${name}`),
+      E.chain((p) =>
+        E.fromOption(() => `Param ${name} has no value`)(
+          O.fromNullable(p.value)
+        )
+      )
+    )
 
 export const findPostParam =
   (name: string) =>
@@ -28,14 +43,16 @@ export const mkGetOrPostRequestParser =
   }) =>
   (
     request: BrowserRequest
-  ): O.Option<{
-    required: Record<K[number], string>
-    optional: Record<L[number], O.Option<string>>
-  }> =>
+  ): E.Either<
+    string,
+    {
+      required: Record<K[number], string>
+      optional: Record<L[number], O.Option<string>>
+    }
+  > =>
     pipe(
-      request,
-      O.some,
-      O.chain(parseGetRequestWithParams(paramNames)),
+      E.right(request),
+      E.chain(parseGetRequestWithParams(paramNames)),
       O.alt(() => parsePostRequestWithParams(paramNames)(request))
     )
 
@@ -46,18 +63,24 @@ export const parseGetRequestWithParams =
   }) =>
   (
     request: BrowserRequest
-  ): O.Option<{
-    required: Record<K[number], string>
-    optional: Record<L[number], O.Option<string>>
-  }> =>
+  ): E.Either<
+    string,
+    {
+      required: Record<K[number], string>
+      optional: Record<L[number], O.Option<string>>
+    }
+  > =>
     pipe(
-      O.some(request),
-      O.bindTo('req'),
-      O.filter(({ req }) => req.request.method === 'GET'),
-      O.bind('queryString', ({ req }) =>
-        O.fromNullable(req.request.queryString)
+      E.right(request),
+      E.bindTo('req'),
+      E.filterOrElseW(
+        ({ req }) => req.request.method === 'GET',
+        () => 'Not a GET request'
       ),
-      O.chain(({ queryString }) =>
+      E.bindW('queryString', ({ req }) =>
+        E.fromNullable(`No Query string`)(req.request.queryString)
+      ),
+      E.chain(({ queryString }) =>
         parseParams(paramNames)(RA.fromArray(queryString))
       )
     )
@@ -72,18 +95,20 @@ const parseParams =
       name: string
       value?: string
     }>
-  ): O.Option<{
-    required: Record<K[number], string>
-    optional: Record<L[number], O.Option<string>>
-  }> =>
+  ): E.Either<
+    string,
+    {
+      required: Record<K[number], string>
+      optional: Record<L[number], O.Option<string>>
+    }
+  > =>
     pipe(
-      requestParams,
-      O.some,
-      O.bindTo('params'),
-      O.bind('required', ({ params }) =>
+      E.right(requestParams),
+      E.bindTo('params'),
+      E.bindW('required', ({ params }) =>
         pipe(
           paramNames.required,
-          O.traverseArray((paramName) =>
+          E.traverseArray((paramName) =>
             pipe(
               params,
               RA.findFirstMap((p) =>
